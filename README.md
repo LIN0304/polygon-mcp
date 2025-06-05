@@ -1,10 +1,10 @@
 # Polygon MCP Server
 
-A Model Context Protocol (MCP) server that provides onchain tools for Claude AI, allowing it to interact with the Polygon PoS blockchain.
+A Model Context Protocol (MCP) server that provides onchain tools for Claude AI, allowing it to interact with blockchain networks such as Polygon PoS and Ethereum mainnet. Polygon is used by default.
 
 ## Features
 
-- Call contract functions on Polygon PoS
+- Call contract functions on supported chains
 - Get ERC20 token balances
 - Transfer ERC20 tokens
 - Get current gas prices
@@ -33,6 +33,7 @@ Create a `.env` file in the root directory with the following variables:
 
 ```
 SEED_PHRASE="your twelve word seed phrase here"
+# Optional: set CHAIN="ethereum" to use Ethereum mainnet
 ```
 
 ## Usage
@@ -85,7 +86,7 @@ For Claude desktop app:
 
 ### call_contract
 
-Call a contract function on Polygon PoS.
+Call a contract function on the configured chain (Polygon by default).
 
 Parameters:
 - `contractAddress`: The address of the contract to call
@@ -96,14 +97,14 @@ Parameters:
 
 ### erc20_balance
 
-Get the balance of an ERC20 token on Polygon PoS.
+Get the balance of an ERC20 token on the configured chain.
 
 Parameters:
 - `contractAddress`: The address of the contract to get the balance of
 
 ### erc20_transfer
 
-Transfer an ERC20 token on Polygon PoS.
+Transfer an ERC20 token on the configured chain.
 
 Parameters:
 - `contractAddress`: The address of the contract to transfer the token from
@@ -112,7 +113,7 @@ Parameters:
 
 ### get_gas_price
 
-Get the current gas price on Polygon PoS.
+Get the current gas price on the configured chain.
 
 ## License
 

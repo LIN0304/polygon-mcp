@@ -7,10 +7,15 @@ import {
 import { version } from "./version.js";
 import * as dotenv from "dotenv";
 import { mnemonicToAccount } from "viem/accounts";
-import { polygon } from "viem/chains";
+import { polygon, mainnet } from "viem/chains";
 import { createWalletClient, http, publicActions } from "viem";
 import { polygonMcpTools, toolToHandler } from "./tools/index.js";
-import { POLYGON_RPC_URL } from "./lib/constants.js";
+import {
+  POLYGON_RPC_URL,
+  POLYGON_CHAIN_ID,
+  ETHEREUM_RPC_URL,
+  ETHEREUM_CHAIN_ID,
+} from "./lib/constants.js";
 
 // 扩展viemClient类型，添加oneInchApiKey属性
 type ExtendedViemClient = ReturnType<typeof createWalletClient> & 
@@ -21,6 +26,20 @@ async function main() {
   dotenv.config();
   const seedPhrase = process.env.SEED_PHRASE;
   const oneInchApiKey = process.env.ONE_INCH_API_KEY;
+  const chainName = process.env.CHAIN || "polygon";
+
+  let chain;
+  let rpcUrl;
+
+  if (chainName === "ethereum") {
+    chain = mainnet;
+    rpcUrl = ETHEREUM_RPC_URL;
+  } else {
+    chain = polygon;
+    rpcUrl = POLYGON_RPC_URL;
+  }
+
+  console.log("Using chain:", chainName);
 
   // 打印环境变量，用于调试
   console.log("Environment variables:");
@@ -42,8 +61,8 @@ async function main() {
 
   const viemClient = createWalletClient({
     account: mnemonicToAccount(seedPhrase),
-    chain: polygon,
-    transport: http(POLYGON_RPC_URL),
+    chain,
+    transport: http(rpcUrl),
   }).extend(publicActions) as ExtendedViemClient;
 
   // 将环境变量添加到viemClient对象中，以便在处理程序中访问
@@ -51,7 +70,7 @@ async function main() {
 
   const server = new Server(
     {
-      name: "Polygon MCP Server",
+      name: `${chainName === "ethereum" ? "Ethereum" : "Polygon"} MCP Server`,
       version,
     },
     {
@@ -101,7 +120,7 @@ async function main() {
   const transport = new StdioServerTransport();
   console.error("Connecting server to transport...");
   await server.connect(transport);
-  console.error("Polygon MCP Server running on stdio");
+  console.error(`${chainName === "ethereum" ? "Ethereum" : "Polygon"} MCP Server running on stdio`);
 }
 
 main().catch((error) => {
