@@ -1,7 +1,6 @@
 import type { Chain } from "viem";
-import { polygon, polygonMumbai } from "viem/chains";
-
-export function constructPolygonScanUrl(
+import { polygon, polygonMumbai, mainnet } from "viem/chains";
+export function constructExplorerUrl(
   chain: Chain,
   transactionHash: `0x${string}`,
 ) {
@@ -11,6 +10,10 @@ export function constructPolygonScanUrl(
 
   if (chain.id === polygonMumbai.id) {
     return `https://mumbai.polygonscan.com/tx/${transactionHash}`;
+  }
+
+  if (chain.id === mainnet.id) {
+    return `https://etherscan.io/tx/${transactionHash}`;
   }
 
   // Default to mainnet

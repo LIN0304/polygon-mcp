@@ -22,7 +22,7 @@ import type {
   checkAllowanceSchema,
   approveTokenSchema
 } from "./schemas.js";
-import { constructPolygonScanUrl } from "../utils/index.js";
+import { constructExplorerUrl } from "../utils/index.js";
 import { polygon } from "viem/chains";
 import { PropertyNFT } from "../contracts/PropertyNFT.js";
 import { PropertyToken } from "../contracts/PropertyToken.js";
@@ -46,7 +46,7 @@ export async function deployPropertyNFTHandler(
   // Return transaction hash and PolygonScan URL
   return JSON.stringify({
     hash,
-    url: constructPolygonScanUrl(wallet.chain ?? polygon, hash),
+    url: constructExplorerUrl(wallet.chain ?? polygon, hash),
   });
 }
 
@@ -79,7 +79,7 @@ export async function deployPropertyTokenHandler(
   // Return transaction hash and PolygonScan URL
   return JSON.stringify({
     hash,
-    url: constructPolygonScanUrl(wallet.chain ?? polygon, hash),
+    url: constructExplorerUrl(wallet.chain ?? polygon, hash),
   });
 }
 
@@ -116,7 +116,7 @@ export async function deployPropertyYieldVaultHandler(
   // Return transaction hash and PolygonScan URL
   return JSON.stringify({
     hash,
-    url: constructPolygonScanUrl(wallet.chain ?? polygon, hash),
+    url: constructExplorerUrl(wallet.chain ?? polygon, hash),
   });
 }
 
@@ -180,7 +180,7 @@ export async function callContractHandler(
 
   return JSON.stringify({
     hash: txHash,
-    url: constructPolygonScanUrl(wallet.chain ?? polygon, txHash),
+    url: constructExplorerUrl(wallet.chain ?? polygon, txHash),
   });
 }
 
@@ -247,7 +247,7 @@ export async function erc20TransferHandler(
 
   return JSON.stringify({
     hash: txHash,
-    url: constructPolygonScanUrl(wallet.chain ?? polygon, txHash),
+    url: constructExplorerUrl(wallet.chain ?? polygon, txHash),
   });
 }
 
@@ -444,7 +444,7 @@ export async function inchSwapHandler(
       // Return transaction details and estimated result
       return JSON.stringify({
         hash,
-        url: constructPolygonScanUrl(wallet.chain ?? polygon, hash),
+        url: constructExplorerUrl(wallet.chain ?? polygon, hash),
         fromToken: swapData.fromToken,
         toToken: swapData.toToken,
         fromAmount: swapData.fromAmount,
@@ -548,7 +548,7 @@ export async function approveTokenHandler(
 
     return JSON.stringify({
       hash,
-      url: constructPolygonScanUrl(wallet.chain ?? polygon, hash),
+      url: constructExplorerUrl(wallet.chain ?? polygon, hash),
       tokenAddress,
       spenderAddress,
       amount: approvalAmount.toString(),

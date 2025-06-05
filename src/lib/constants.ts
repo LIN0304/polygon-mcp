@@ -5,3 +5,7 @@ export const USDC_DECIMALS = 6;
 // Polygon PoS network details
 export const POLYGON_RPC_URL = "https://polygon-rpc.com/";
 export const POLYGON_CHAIN_ID = 137;
+
+// Ethereum mainnet details
+export const ETHEREUM_RPC_URL = "https://eth.llamarpc.com";
+export const ETHEREUM_CHAIN_ID = 1;
